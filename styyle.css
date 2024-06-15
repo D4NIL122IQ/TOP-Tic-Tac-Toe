@@ -4,3 +4,66 @@
     box-sizing: border-box;
 }
 
+header{
+    background-color: #004e65;
+    color: white;
+    text-align: center;
+}
+
+body{
+    background-color: #002c3e;
+}
+
+.container{
+    margin-top: 30px ;
+    display: flex;
+    align-items: center;
+}
+
+.allButtons > button{
+    width: 70px;
+    height: 50px;
+    font-size: large;
+    margin: 10px;
+}
+
+.allButtons > button:hover{
+    box-shadow: 0px 0px 10px #00bacf ;
+}
+
+.gameBoard{
+    height: 600px;
+    width: 600px;
+    background-color: #F0F0F0;
+    margin: 0px auto;
+    border: 1px solid ;
+    display: flex;
+}
+
+.case{
+    height: 200px;
+    width: 200px;
+    border: 2px solid #00bacf;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 600px){
+    .container{
+        margin-top: 30px ;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .gameBoard{
+        height: 300px;
+        width: 300px;
+    }
+
+    .case{
+        height: 100px;
+        width: 100px;
+    }
+}
+
+
