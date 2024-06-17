@@ -1,43 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styyle.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styyle.css" />
     <title>Tic Tac Toe</title>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <header>
-        <h1>Tic Tac Toe</h1>
+      <h1>Tic Tac Toe</h1>
     </header>
 
-
     <div class="container">
-        <div class="allButtons">
-            <button type="button">Start</button>
-            <button type="reset">restart</button>
+      <div class="allButtons">
+        <button type="button" id="start">Start</button>
+        <button type="reset" id="reset">restart</button>
+      </div>
+      <div class="gameBoard">
+        <div class="culomn">
+          <div class="case"></div>
+          <div class="case"></div>
+          <div class="case"><h1>Z</h1></div>
         </div>
-        <div class="gameBoard">
-            <div class="culomn">
-                <div class="case "></div>
-                <div class="case"></div>
-                <div class="case "></div>
-            </div>
-            <div class="culomn">
-                <div class="case "></div>
-                <div class="case "></div>
-                <div class="case "></div>
-            </div>
-            <div class="culomn">
-                <div class="case "></div>
-                <div class="case"></div>
-                <div class="case "></div>
-            </div>
+        <div class="culomn">
+          <div class="case"></div>
+          <div class="case"></div>
+          <div class="case"></div>
         </div>
+        <div class="culomn">
+          <div class="case"></div>
+          <div class="case"></div>
+          <div class="case"></div>
+        </div>
+      </div>
     </div>
 
     <script src="function.js"></script>
-</body>
+  </body>
 </html>
