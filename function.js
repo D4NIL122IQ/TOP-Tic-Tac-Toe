@@ -12,7 +12,12 @@ class Game {
   removEvent() {
     this.cases.forEach((cas) => {
       cas.removeEventListener("click", () => {
-        cas.innerHTML = `<h1 class='${this.turn}'>${this.turn}</h1>`;
+        if(this.turn == "X"){
+           cas.innerHTML = `<div class="${this.turn}"></div>`
+        }else{
+            cas.innerHTML = `<div class="${this.turn}"></div>`
+        }
+       ;
         this.turn == this.player1
           ? (this.turn = this.player2)
           : (this.turn = this.player1);
@@ -21,17 +26,19 @@ class Game {
   }
 
   game() {
+    document.querySelector(".turn").innerHTML  = `<h1>It ${this.turn} turn</h1>`
     this.cases.forEach((cas) => {
       cas.addEventListener(
         "click",
         () => {
           cas.innerHTML = `<h1 class='${this.turn}'>${this.turn}</h1>`;
-          this.turn == this.player1
-            ? (this.turn = this.player2)
-            : (this.turn = this.player1);
-
+          this.turn == this.player1? (this.turn = this.player2): (this.turn = this.player1);
+          document.querySelector(".turn").innerHTML  = `<h1>It ${this.turn} turn</h1>`
           if (this.verify(this.setupMatrice()) == false) {
-            this.finish();
+            setTimeout(()=>{
+              this.restart();
+            },1000)
+            
           }
         },
         { once: true }
@@ -44,13 +51,6 @@ class Game {
     });
   }
 
-  finish() {
-    document.querySelector("#reset").addEventListener("click", () => {
-      this.restart();
-
-      this.game();
-    });
-  }
   //creation d'une matrice qui contient les position des X et O
   setupMatrice() {
     let matriceCaseCases = new Array(3);
@@ -83,20 +83,9 @@ class Game {
     return false;
   }
 
-  verify(matriceGameBoard) {
-    let tabScore = [0, 0];
+  verify(matriceGameBoard) {    
+
     let tabScoreDiagonal = [0, 0]; // case 0 pour X et case 1 pour O diagonal
-    let tabScoreAntiDiagonal = [0, 0]; // case 0 pour X  et case 1 pour 1
-    let matriceLigne = [
-      [0, 0],
-      [0, 0],
-      [0, 0],
-    ]; // colonne 0 pour pour le X
-    let matriceColonne = [
-      [0, 0],
-      [0, 0],
-      [0, 0],
-    ]; // colonne 0 pour X
 
     // check diagonal
     for (let i = 0; i < 3; i++) {
@@ -104,6 +93,7 @@ class Game {
         if (matriceGameBoard[i][i] == "X") {
           if (tabScoreDiagonal[1] == 0) {
             tabScoreDiagonal[0]++;
+
           } else {
             break;
           }
@@ -116,6 +106,15 @@ class Game {
         }
       }
     }
+    if(tabScoreDiagonal[0] == 3 ){
+      document.querySelector(".turn").innerHTML = "<h1>X is the winner</h1>";
+      return false;
+    }else if(tabScoreDiagonal[1] == 3 ){
+      document.querySelector(".turn").innerHTML = "<h1>O is the winner</h1>";
+      return false;
+    }
+
+    let tabScoreAntiDiagonal = [0, 0]; // case 0 pour X  et case 1 pour 1
 
     //check anti diagonal
     for (let i = 0; i < 3; i++) {
@@ -135,6 +134,16 @@ class Game {
         }
       }
     }
+    if(tabScoreAntiDiagonal[0] == 3 ){
+      document.querySelector(".turn").innerHTML = "<h1>X is the winner</h1>";
+      return false;
+    }else if(tabScoreAntiDiagonal[1] == 3 ){
+      document.querySelector(".turn").innerHTML = "<h1>O is the winner</h1>";
+      return false;
+    }
+
+    console.log("helo zebi")
+    let matriceLigne = [[0, 0],[0, 0],[0, 0],]; // colonne 0 pour pour le X
 
     // pour la verification des ligne
 
@@ -172,8 +181,20 @@ class Game {
           }
         }
       }
+
+    } 
+    
+    if(matriceLigne[0][0] == 3 || matriceLigne[1][0] == 3 || matriceLigne[2][0] == 3 ){
+      document.querySelector(".turn").innerHTML = "<h1>X is the winner</h1>";
+      return false;
+    }else if(matriceLigne[1][1] == 3 || matriceLigne[2][1] == 3 || matriceLigne[0][1] == 3 ){
+      document.querySelector(".turn").innerHTML = "<h1>O is the winner</h1>";
+      return false;
     }
 
+
+    let matriceColonne = [[0, 0],[0, 0],[0, 0],]; // colonne 0 pour X
+    
     // pour la verification des colonnes
 
     for (let i = 0; i < 3; i++) {
@@ -212,32 +233,15 @@ class Game {
       }
     }
 
-    if (
-      tabScoreAntiDiagonal[0] == 3 ||
-      tabScoreDiagonal[0] == 3 ||
-      matriceLigne[0][0] == 3 ||
-      matriceLigne[1][0] == 3 ||
-      matriceLigne[2][0] == 3 ||
-      matriceColonne[0][0] == 3 ||
-      matriceColonne[1][0] == 3 ||
-      matriceColonne[2][0] == 3
-    ) {
-      document.querySelector(".winnerMsg").innerHTML = "X is the winner";
+    if (matriceColonne[0][0] == 3 || matriceColonne[1][0] == 3 || matriceColonne[2][0] == 3) {
+      document.querySelector(".turn").innerHTML = "<h1>X is the winner</h1>";
       return false;
-    } else if (
-      tabScoreAntiDiagonal[1] == 3 ||
-      tabScoreDiagonal[1] == 3 ||
-      matriceLigne[0][1] == 3 ||
-      matriceLigne[1][1] == 3 ||
-      matriceLigne[2][1] == 3 ||
-      matriceColonne[0][1] == 3 ||
-      matriceColonne[1][1] == 3 ||
-      matriceColonne[2][1] == 3
+    } else if ( matriceColonne[0][1] == 3 || matriceColonne[1][1] == 3 || matriceColonne[2][1] == 3
     ) {
-      document.querySelector(".winnerMsg").innerHTML = "O is the winner";
+      document.querySelector(".turn").innerHTML = "<h1>O is the winner</h1>";
       return false;
     } else if (this.isEmptyMatrice(matriceGameBoard) == false) {
-      document.querySelector(".winnerMsg").innerHTML = "egalite";
+      document.querySelector(".turn").innerHTML = "<h1>No one win</h1>";
       return false;
     }
 
@@ -256,6 +260,7 @@ class Game {
     });
     this.cases = document.querySelectorAll(".case");
     this.turn = this.player1;
+    document.querySelector(".turn").innerHTML  = `<h1>It ${this.turn} turn</h1>`
   }
 }
 
